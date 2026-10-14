@@ -11,6 +11,7 @@ module.exports = {
     index: './src/javascripts/index.js',
     rpsgame: './src/javascripts/rps-game.js',
     rpsreact: './src/javascripts/rps-game.jsx',
+    formreact: './src/javascripts/form-react.jsx',
   },
   output: {
     filename: '[name].js',
