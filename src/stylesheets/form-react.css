@@ -1,135 +1,387 @@
-* {
+body.form-react {
+    --ink: #111;
+    --muted: #595959;
+    --line: #bfbfbf;
+    --field-border: #7d7d7d;
+    margin: 0;
+    background: #fff;
+    color: var(--ink);
+    font: 16px/1.4 "Segoe UI", system-ui, sans-serif;
+}
+
+.form-react *,
+.form-react *::before,
+.form-react *::after {
     box-sizing: border-box;
 }
 
-body.form-react {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    line-height: 1.3;
-    color: #000;
-    background: #F5F5F5;
-}
-
-.form-react h1,
-.form-react h2,
-.form-react h3 {
-    margin: 0 0 16px;
-    font-weight: bold;
-}
-
-.form-react h1 {
-    font-size: 32px;
-}
-
-.form-react h2 {
-    font-size: 20px;
-}
-
-.form-react h3 {
-    font-size: 18px;
-}
-
 .form-react .container {
-    max-width: 1200px;
+    width: min(87.5%, 1344px);
     margin: 0 auto;
-    padding: 32px 0;
+    padding-bottom: 24px;
 }
 
 .form-react .header {
-    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 16px;
+    padding: 10px 0 32px;
+}
+
+.form-react .header::before {
+    content: "";
+    grid-area: 2 / 1 / 3 / -1;
+    border-top: 1px solid var(--field-border);
+    margin: 14px 0 24px;
 }
 
 .form-react .brand {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 24px;
+    grid-area: 1 / 1;
+    font-size: clamp(34px, 3.9vw, 60px);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
 }
 
-.form-react p {
-    font-size: 14px;
-    color: #666666;
+.form-react .header > span {
+    grid-area: 1 / 2;
+    font-size: clamp(10px, 1.6vw, 24px);
+    font-weight: 700;
+    letter-spacing: 0.17em;
+    text-align: right;
+    text-transform: uppercase;
 }
 
-.form-react form.form {
-    display: flex;
-    gap: 24px;
+.form-react .header h1 {
+    grid-area: 3 / 1 / 4 / -1;
+    font-size: clamp(36px, 4.4vw, 68px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+.form-react .header p {
+    grid-area: 4 / 1 / 5 / -1;
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: clamp(19px, 2.2vw, 34px);
+    line-height: 1.3;
+}
+
+.form-react .form {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(18px, 2.1vw, 32px);
 }
 
 .form-react .fields {
-    flex: 1;
+    --section-number-space: clamp(35px, 5vw, 76px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 clamp(12px, 1.2vw, 19px);
+    border: 1px solid var(--line);
 }
 
-.form-react .sidebar {
-    width: 340px;
-    flex-shrink: 0;
+.form-react .fields .panel {
+    position: relative;
+    padding: 18px 5px 30px var(--section-number-space);
 }
 
-.form-react .panel {
-    background: #fff;
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 24px;
+.form-react .fields .panel + .panel {
+    border-top: 1px solid var(--line);
 }
 
-.form-react .panel.preview {
-    background: #EEEDF7;
-    text-align: center;
+.form-react .panel h2 {
+    font-size: clamp(24px, 2.4vw, 36px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
-.form-react .field {
+.form-react .fields h2 {
     margin-bottom: 16px;
 }
 
-.form-react .field > label {
-    display: block;
-    margin-bottom: 8px;
-}
-
-.form-react input[type="text"],
-.form-react input[type="email"],
-.form-react input[type="number"],
-.form-react input[type="tel"],
-.form-react select,
-.form-react textarea {
-    width: 100%;
-    padding: 12px 12px;
-    border-radius: 8px;
-    border: 1px solid #d9d9d9;
-    background: #fff;
-    color: #242424;
-}
-
-.form-react textarea {
-    height: 100px;
+.form-react .fields h2 > span {
+    position: absolute;
+    left: 0;
+    padding-top: 2px;
+    color: var(--muted);
+    font-size: clamp(20px, 2.1vw, 32px);
 }
 
 .form-react .options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(12px, 1.5vw, 23px);
+}
+
+.form-react .fields .panel:first-child .options {
+    grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr));
+}
+
+.form-react .panel > .field + .field {
+    margin-top: 12px;
+}
+
+.form-react .field label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: clamp(16px, 1.3vw, 20px);
+    line-height: 1.2;
+}
+
+.form-react .field input:not([type="checkbox"]),
+.form-react .field select {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 9px clamp(10px, 1vw, 16px);
+    border: 1px solid var(--field-border);
+    border-radius: 6px;
+    background-color: #fff;
+    color: var(--ink);
+    font: inherit;
+    font-size: clamp(16px, 1.4vw, 22px);
+    line-height: 1.3;
+}
+
+.form-react .field select {
+    appearance: none;
+    padding-right: 32px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 10'%3E%3Cpath d='m1 1 7 7 7-7' fill='none' stroke='%23111' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 12px center / 14px 9px;
+}
+
+.form-react .field input::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+
+.form-react .field label[for="printing"],
+.form-react fieldset.options > label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    font-size: clamp(16px, 1.5vw, 22px);
+    cursor: pointer;
+}
+
+.form-react .options + .field label[for="printing"] {
+    margin-top: 16px;
+}
+
+.form-react .field label strong {
+    margin-left: auto;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.form-react .field label[for="printtext"] {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.form-react .field label span,
+.form-react .options label span {
+    color: var(--muted);
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.form-react input[type="checkbox"],
+.form-react input[type="radio"] {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    accent-color: var(--ink);
+}
+
+.form-react fieldset.options {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 0 clamp(16px, 3vw, 46px);
+    min-width: 0;
+    margin-bottom: 12px;
+}
+
+.form-react .sidebar {
+    display: flex;
     flex-direction: column;
-    margin-bottom: 24px;
+    gap: 16px;
+    min-width: 0;
+}
+
+.form-react .sidebar .preview {
+    position: relative;
+    display: grid;
+    place-items: end center;
+    min-height: 250px;
+    aspect-ratio: 10 / 7;
+    padding: 31px 14px 23px;
+    background: #e5e5e5;
+}
+
+.form-react .preview h2 {
+    position: absolute;
+    top: 11px;
+    left: 14px;
+    color: #343434;
+    font-size: clamp(14px, 1.3vw, 20px);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.form-react .preview svg {
+    display: block;
+    width: 62%;
+    max-width: 324px;
+    height: auto;
+}
+
+.form-react .preview svg text {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.form-react .sidebar .panel:not(.preview) {
+    flex: 1;
+    padding: 9px clamp(14px, 1.4vw, 22px) 25px;
+    border: 1px solid var(--line);
+}
+
+.form-react .sidebar dl {
+    margin-top: 10px;
+    font-size: clamp(18px, 1.5vw, 23px);
+    line-height: 1.3;
+    font-variant-numeric: tabular-nums;
 }
 
 .form-react .price-row {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-top: 5px;
+}
+
+.form-react .price-row dd {
+    white-space: nowrap;
 }
 
 .form-react .price-row.total {
-    font-size: 20px;
-    font-weight: bold;
-    color: #000;
+    margin-top: 23px;
+    padding-top: 11px;
+    border-top: 1px solid var(--line);
+    font-size: clamp(24px, 2.2vw, 33px);
+    font-weight: 700;
 }
 
-.form-react button {
+.form-react .total dd {
+    font-size: clamp(30px, 2.9vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.form-react .sidebar button {
     width: 100%;
-    padding: 12px 16px;
-    border: 0;
-    border-radius: 8px;
-    background-color: #000;
+    min-height: 58px;
+    padding: 13px 15px;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+    background: var(--ink);
     color: #fff;
+    font: inherit;
+    font-size: clamp(20px, 2vw, 30px);
+    font-weight: 700;
     cursor: pointer;
+}
+
+.form-react .sidebar .panel button {
+    margin-top: 23px;
+}
+
+.form-react .sidebar button:hover {
+    background: #303030;
+}
+
+.form-react .sidebar button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.form-react .order-error {
+    margin-top: 16px;
+    padding-left: 12px;
+    border-left: 2px solid var(--ink);
+    font-size: 16px;
+}
+
+.form-react :is(input, select, button, a):focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+}
+
+@media (max-width: 1050px) {
+    .form-react .container {
+        width: calc(100% - 48px);
+    }
+
+    .form-react .fields {
+        --section-number-space: 36px;
+    }
+}
+
+@media (max-width: 850px) {
+    .form-react .form {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .form-react .sidebar .preview {
+        aspect-ratio: auto;
+        min-height: 310px;
+    }
+
+    .form-react .preview svg {
+        max-width: 255px;
+    }
+}
+
+@media (max-width: 520px) {
+    .form-react .container {
+        width: calc(100% - 32px);
+    }
+
+    .form-react .header {
+        padding: 14px 0 24px;
+    }
+
+    .form-react .fields {
+        --section-number-space: 30px;
+    }
+
+    .form-react .fields .panel {
+        padding-right: 0;
+        padding-bottom: 20px;
+    }
+
+    .form-react .options {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .form-react .fields .panel:first-child .options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .form-react .fields .panel:first-child .options .field:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .form-react .sidebar .preview {
+        min-height: 260px;
+    }
 }

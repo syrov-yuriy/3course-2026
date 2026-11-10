@@ -1,87 +1,106 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-export default function OrderForm () {
-    function handleSubmit (event) {
-        event.preventDefault();
-    }
+const initialForm = {
+    color: '',
+    size: '',
+    quantity: 1,
+    printing: false,
+    printtext: '',
+    delivery: 'pickup',
+    address: '',
+    customerName: '',
+    customerEmail: '',
+    customerPhone: '',
+};
 
-    const initialForm = {
-        color: '',
-        size: '',
-        quantity: 1,
-        printing: false,
-        printtext: '',
-        delivery: 'pickup',
-        address: '',
-        customerName: '',
-        customerEmail: '',
-        customerPhone: '',
-    }
-
+export default function OrderForm() {
     const [form, setForm] = useState(initialForm);
 
     function handleChange(event) {
-        const {name, value, type, checked} = event.target;
+        const { name, value, type, checked } = event.target;
+        setForm(previousForm => ({
+            ...previousForm,
+            [name]: type === 'checkbox' ? checked : value,
+        }));
+    }
 
-        const nextForm = {
-            ...form,
-            [name]: type === checkbox ? checkbox : value
-        }
-
-        setForm(nextForm);
+    function handleSubmit(event) {
+        event.preventDefault();
     }
 
     return (
-        <form onSubmit={handleSubmit} action="" method="post" class="form">
-            <div class="fields">
-                <section class="panel">
-                    <h2>1. Собери футболку</h2>
-                    <div class="field">
-                        <label for="color">Цвет</label>
-                        <select value={form.color} onChange={handleChange} name="color" id="color" required>
-                            <option value="">Не выбран</option>
-                            <option value="Молочный">Молочный</option>
-                            <option value="Лавандовый">Лавандовый</option>
-                            <option value="Графитовый">Графитовый</option>
-                        </select>
+        <form className="form" onSubmit={handleSubmit} aria-labelledby="order-title">
+            <div className="fields">
+                <section className="panel" aria-labelledby="shirt-title">
+                    <h2 id="shirt-title">
+                        <span aria-hidden="true">01</span>
+                        Собери футболку
+                    </h2>
+                    <div className="options">
+                        <div className="field">
+                            <label htmlFor="color">Цвет</label>
+                            <select id="color" name="color" value={form.color} onChange={handleChange} required>
+                                <option value="">Не выбран</option>
+                                <option>Молочный</option>
+                                <option>Лавандовый</option>
+                                <option>Графитовый</option>
+                            </select>
+                        </div>
+                        <div className="field">
+                            <label htmlFor="size">Размер</label>
+                            <select id="size" name="size" value={form.size} onChange={handleChange} required>
+                                <option value="">Не выбран</option>
+                                <option>M</option>
+                                <option>L</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+                        <div className="field">
+                            <label htmlFor="quantity">Количество</label>
+                            <input id="quantity" name="quantity" type="number" min="1" max="10" step="1"
+                                value={form.quantity} onChange={handleChange} required />
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="size">Размер</label>
-                        <select value={form.size} onChange={handleChange} name="size" id="size" required>
-                            <option value="">Не выбран</option>
-                            <option value="M">M</option>
-                            <option value="L">L</option>
-                            <option value="XL">XL</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="quantity">Количество: от 1 до 10</label>
-                        <input type="number" id="quantity" value={form.quantity} onChange={handleChange} name="quantity" min="1" max="10" required />
-                    </div>
-                    <div class="field">
-                        <label for="printing">
-                            <input name="printing" id="printing" type="checkbox" checked={form.printing} onChange={handleChange} />
-                            Добавить надпись + 300 руб
+
+                    <div className="field">
+                        <label htmlFor="printing">
+                            <input id="printing" name="printing" type="checkbox" checked={form.printing}
+                                onChange={handleChange} />
+                            Добавить надпись
+                            <strong>+300&nbsp;₽</strong>
                         </label>
                     </div>
+
                     {form.printing && (
-                        <div class="field">
-                            <label for="printtext">Надпись: до 20 символов</label>
-                            <input type="text" id="printtext" name="printtext" value={form.printtext} onChange={handleChange} maxlength="20" />
+                        <div className="field">
+                            <label htmlFor="printtext">
+                                Надпись на футболке
+                                <span>До 20 символов</span>
+                            </label>
+                            <input id="printtext" name="printtext" type="text" maxLength={20}
+                                value={form.printtext} onChange={handleChange} />
                         </div>
                     )}
-                    
                 </section>
-                <section class="panel">
-                    <h2>2. Получение заказа</h2>
+
+                <section className="panel" aria-labelledby="delivery-title">
+                    <h2 id="delivery-title">
+                        <span aria-hidden="true">02</span>
+                        Получение заказа
+                    </h2>
                 </section>
-                <section class="panel">
-                    <h2>3. Контакты</h2>
+
+                <section className="panel" aria-labelledby="contacts-title">
+                    <h2 id="contacts-title">
+                        <span aria-hidden="true">03</span>
+                        Контакты
+                    </h2>
                 </section>
             </div>
-            <div class="sidebar">
+
+            <div className="sidebar">
                 <button type="submit">Оформить заказ</button>
             </div>
         </form>
-    )
-} 
+    );
+}
